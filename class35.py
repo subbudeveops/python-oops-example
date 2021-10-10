@@ -46,6 +46,7 @@ class A:
         self.__age=age
         self.__sal=sal
 a=A('subbu',10,1000)  
-print(a._A__name)
-a._A__name='ravi'
+#print(a.__name)#this is not way of aceesing private vriable
+print(a._A__name)#this aceesing private variable
+a._A__name='ravi'#this changif of private vriable values
 print(a._A__name)
