@@ -1,0 +1,5 @@
+first line in file2.txt
+second line in file2.txt
+third line in file2.txt
+fouth line in file2.txt
+fifth line in file2.txt
