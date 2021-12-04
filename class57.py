@@ -143,6 +143,113 @@ print()
 #findall():can u find all the match and return the list
 
 import re
-l=re.findall('[0-9]','a7b9k2')
+l=re.findall('\W','a7@$b9k2')
 print(l)
+
+print()
+
+#finditer():it return iterator of matched object
+import re
+match=re.finditer('\d','12@567d')
+for m in match:
+    print(m.start(),m.end(),m.group())
+
+print()
+
+#sub(): sub means subtitution or replacements
+#re.sub(regex,replacement,targetstring)
+import re
+s=re.sub('\d','***','a7b8@9efg')
+print(s)
+
+print()
+
+#subn():it as exactly same as sub exception  it alos returns the number of replacement
+# this function is return tuple where element is result string and second element is number of replacement
+#  t(resultsting,nuber of replacement)
+import re
+t=re.subn('\d','***','a@5b7')
+print('the result string:',t[0])
+print('nuber of replacement:',t[1])
+
+print()
+
+#split():if we want to spilt given target string according to a particular pattern then can go for spilt()
+# this spilt si return list of all token
+import re
+s=re.split('-','10-20-30-40')
+print(s)  
+
+#. is regular expresion cosider all  that way \. or [.] is regular expression trated as symbols only
+import re
+l=re.split('[.]','www.subbu@gmail.com')
+for s in l:
+    print(s)
+
+print()
+#^symbol:we can use ^ symbol to check wheter the given target string start with our provided pattern or not
+# ex:
+# res=re.search('^Learn','s')
+#if the target stirng start with Learn then it will return match object,other wise return None
+import re
+s='Learning python very easy'
+res=re.search('^Learn',s)
+if res!=None:
+    print("target string start with Learn")
+else:
+    print('targer string not start with Learn')
+print()
+# $symbol:we can use $ symbol to check wheter the target string end with our provide pattern or not
+# eg:res=re.search('Easy$',s)
+# if the target string is end with Easy it will return match object,other wise return None 
+import re
+s="Learn with python is very Easy"
+res=re.search('Easy$',s)
+if res!=None:
+    print('the target string is end with Easy')
+else:
+    print('target string end not with Easy')
+print()
+#Note:if we want ignore case then we have to pass 3rd argument re.IGNORECASE for search() function
+import re
+s="Learn with python is very easy"
+res=re.search('Easy$',s,re.IGNORECASE)
+if res!=None:
+    print('the target string is end with Easy')
+else:
+    print('target string end not with Easy')
+
+    print()
+
+#App:To write a python program to extract all mobile numbers present in input.txt where number are mixed with normal text data
+import re
+f1=open('input.txt','r')
+f2=open('output.txt','w')
+for line in f1:
+    list=re.findall('[7-9]\d{9}',line)
+    for n in list:
+        f2.write(n+"\n")
+print("Extract all nuber into output.txt ")
+f1.close()
+f2.close()
+
+
+print()
+
+#Example of Regular Expression
+#1.first chsrcter should be lower case from a to k
+#2.the second character should be digits divisble by 3
+#3.the length identifier shouble at least 2
+import re
+s=input('Enter the indentifier:')
+res=re.fullmatch('[a-k][0369][a-zA-Z0-9#]*',s)
+if res!=None:
+    print(s,'is validate yava identifier')
+else:
+    print(s,'is not yava identifier')
+
+
+
+
+
 

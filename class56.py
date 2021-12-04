@@ -52,7 +52,7 @@ print(squareIt(4))
 #File "class56.py", line 36, in <module>
 # assert squareIt(3)==9,'The squre of 3 should be 9'
 #AssertionError: The squre of 3 should be 9
- print()
+print()
 
 
 def squareIt(x):
