@@ -1,0 +1,16 @@
+INFO:root:a new request come
+INFO:root:Processing is completed
+INFO:root:a new request come
+ERROR:root:invalid literal for int() with base 10: 'ten'
+Traceback (most recent call last):
+  File "class61.py", line 10, in <module>
+    y=int(input('Enter the second number'))
+ValueError: invalid literal for int() with base 10: 'ten'
+INFO:root:Processing is completed
+INFO:root:a new request come
+ERROR:root:invalid literal for int() with base 10: ''
+Traceback (most recent call last):
+  File "class61.py", line 9, in <module>
+    x=int(input('Enter the firstnumber:'))
+ValueError: invalid literal for int() with base 10: ''
+INFO:root:Processing is completed
