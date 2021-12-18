@@ -217,6 +217,89 @@ ts=unittest.TestSuite([tc1,tc2])
 unittest.TextTestRunner().run(ts)
 
 
+
+
+#python unittesting with selenium:
+#--------------------------------
+#write apython script to test Google search functionality by using selenium Unitttesing
+
+#Selenium:package
+#webdriver:module
+#pip install selenium
+
+#webdriver module contain several classes and function to test functionality of the web application
+# if u want form testing we want lanuch browser
+#Launch Browser:
+#---------------
+#Browser Driver must be required which is responisable to lanuch our browser
+#download the geckodriver and create library folder
+
+#Browser Interaction and navigation of web pages:
+#------------------------------------------------
+#1.driver.get(url)
+# to open specified url
+# iwant open facebook
+#2.driver.maximize_window()
+#3.driver.title()
+#4.driver.current_url()
+#5.driver.refresh()
+#6.driver.back()--->Goes one step backward in the browser history
+#7.driver.forward---->goes one step forward in the browser history
+#8.driver.close()--->To close current window
+#9.drive.quit()
+
+from selenium import webdriver
+driver=webdriver. Firefox(executable_path='E:\library\geckodriver')
+driver.get('http://www.facebook.com/')
+print('title:',driver.title)
+print('current page url:',driver.current_url)
+driver.get('http://durgasoftvideos.com/')
+print('title:',driver.title)
+print('current page url:',driver.current_url)
+driver.back()  #after back current url is facebbok url
+print('After Back current url:',driver.current_url)
+driver.forward()
+print('after Forword current url:',driver.current_url)
+driver.close()
+
+#how to interact with web elements:
+#----------------------------------
+# if i know the id how to get element
+#driver.find_element_by_id('id')
+#driver.find_element_by_name('name')
+#driver.find_element_by_xpath('xpath')
+#driver.find_element_by_css_selector('css')
+#driver.find_element_by_link_text('text')
+
+
+#driver.find_element(By.ID,'id')
+#driver.find_element(By.NAME,'name')
+#driver.find_element(By.LINK_TEXT,'txt')
+#driver.find_element(By.CSS_SELECOT,'css')
+rom selenium import webdriver
+import unittest
+
+class GoogleSearchDemo(unittest.TestCase):
+    def setUp(self):
+        global driver
+        driver=webdriver.Firefox(executable_path='E:\library\geckodriver')
+        driver.get('http://google.com')
+        driver.maximize_window()
+    def test(self):
+        driver.find_element_by_name(self,"q").send_keys('mahesh babu')
+        time.sleep(5)
+        driver.find_element_by_name('btnk').click()
+        time.sleep(5)
+        driver.find_element_by_name('LC201b').click
+    def tearDown(self):
+        print('treaDown completed')
+unittest.main()
+driver.close()
+
+
+
+
+
 # To overcome all limitacation  we can go for
 
 #pyTest Framework:
@@ -429,107 +512,139 @@ def setUptearDownClass():
     print('setUpClass activity')
     yield
     print('tearDownClass activity')
-def test_methodA(setUptearDown,etUptearDownClass):
+def test_methodA(setUptearDown,setUptearDownClass):
     print('test_method A execution.....')
-def test_methodB(setUptearDown,etUptearDownClass):
+def test_methodB(setUptearDown,setUptearDownClass):
     print('test_method B execution.....')
 
 #py.test -s -v pytest1.test.py
 
 
 
+#Note: multiple testscript required same setUp and tearDown functinality
+#dont write setup and tearDown  functionality  every test script seperately uncessary length  and uncesarry duplicate of code  how to slove this problem
+# we have one special file "conftest.py" this name always fixed
+#common setup and tearDown code in this file.
+
+# pytest1_test.py
+def test_methodA(setUptearDown,setUptearDownClass):
+    print('test1:test_method A execution.....')
+def test_methodB(setUptearDown,setUptearDownClass):
+    print('test1:test_method B execution.....')
+
+#pytest2_test.py
+def test_methodA(setUptearDown,setUptearDownClass):
+    print('test2:test_method A execution.....')
+def test_methodB(setUptearDown,setUptearDownClass):
+    print('test2:test_method B execution.....')
 
 
+#conftest.py   name is always fix
+#code reusability
+#common setup and tearDown activites, we have to define in this file automatically available for all test scripts
 
+#conftest.py
 
+import pytest
+@pytest.yield_fixture()
+def setUptearDown():
+    print('setup activity')
+    yield
+    print('tearDown activity')
+@pytest.yield_fixture(scope='module')
+def setUptearDownClass():
+    print('setupclass activity')
+    yield
+    print('tearDownClass activity')
 
+#py.test -s -v pytest1_test.py pytest2_test.py
 
-
-
-
-
-
-
-
-
-
-
-#python unittesting with selenium:
-#--------------------------------
-#write apython script to test Google search functionality by using selenium Unitttesing
-
-#Selenium:package
-#webdriver:module
-#pip install selenium
-
-#webdriver module contain several classes and function to test functionality of the web application
-# if u want form testing we want lanuch browser
-#Launch Browser:
-#---------------
-#Browser Driver must be required which is responisable to lanuch our browser
-#download the geckodriver and create library folder
-
-#Browser Interaction and navigation of web pages:
+#Various possible ways to run pytest test scripts:
 #------------------------------------------------
-#1.driver.get(url)
-# to open specified url
-# iwant open facebook
-#2.driver.maximize_window()
-#3.driver.title()
-#4.driver.current_url()
-#5.driver.refresh()
-#6.driver.back()--->Goes one step backward in the browser history
-#7.driver.forward---->goes one step forward in the browser history
-#8.driver.close()--->To close current window
-#9.drive.quit()
+#1.py.test -v -s
+#   To run all test methods present in all test scripts of current working dirctory
 
-from selenium import webdriver
-driver=webdriver. Firefox(executable_path='E:\library\geckodriver')
-driver.get('http://www.facebook.com/')
-print('title:',driver.title)
-print('current page url:',driver.current_url)
-driver.get('http://durgasoftvideos.com/')
-print('title:',driver.title)
-print('current page url:',driver.current_url)
-driver.back()  #after back current url is facebbok url
-print('After Back current url:',driver.current_url)
-driver.forward()
-print('after Forword current url:',driver.current_url)
-driver.close()
+# how to run particular testscript
+#2.py.test -v -s pytest1_test.py
+# To run all test methods of aparticular test script
 
-#how to interact with web elements:
-#----------------------------------
-# if i know the id how to get element
-#driver.find_element_by_id('id')
-#driver.find_element_by_name('name')
-#driver.find_element_by_xpath('xpath')
-#driver.find_element_by_css_selector('css')
-#driver.find_element_by_link_text('text')
+#3.how to run multiple testscript
+#py.test -v -s pytest1_test.py pytest2_test.py
+#  To run multiple test script
+
+#4.i want to run perticular test_method
+#py.test -v -s pytest1_test.py::test_methodA
+#  To run perticular test _method
+
+# multiple test method is there which method executing first in pytest
+# pytest by default executing all method from top to bottom.
+#test1.py
+def test_methodC():
+    print('test_methodC execution')
+def test_methodA():
+    print('test_methodA execution')
+def test_methodB():
+    print('test_methodB execution')
+
+#Note: in pytest method is executing from top to bottom
+
+#output
+#test1.py::test_methodC test_methodC execution
+#PASSED
+#test1.py::test_methodA test_methodA execution
+#PASSED
+#test1.py::test_methodB test_methodB execution
+#PASSED
+
+#how to customize order of tests in pytest:
+#------------------------------------------
+# we need to install pytest-ordering module
+#pip install pytest_ordering
+
+#test1.py
+import pytest
+@pytest.mark.run(order=3)
+def test_methodC():
+    print('test_methodC execution')
+@pytest.mark.run(order=1)
+def test_methodA():
+    print('test_methodA execution')
+@pytest.mark.run(order=2)
+def test_methodB():
+    print('test_methodB execution')
+
+#output
+#test1.py::test_methodA test_methodC execution
+#PASSED
+#test1.py::test_methodB test_methodA execution
+#PASSED
+#test1.py::test_methodC test_methodB execution
+#PASSED
+
+#How to generate test report in html form in pytest:
+#---------------------------------------------------
+# we have to uinstall pytest-html module
+#pip install pytest-html
+#pytest -v -s test1.py --html=result1.py
 
 
-#driver.find_element(By.ID,'id')
-#driver.find_element(By.NAME,'name')
-#driver.find_element(By.LINK_TEXT,'txt')
-#driver.find_element(By.CSS_SELECOT,'css')
-rom selenium import webdriver
-import unittest
 
-class GoogleSearchDemo(unittest.TestCase):
-    def setUp(self):
-        global driver
-        driver=webdriver.Firefox(executable_path='E:\library\geckodriver')
-        driver.get('http://google.com')
-        driver.maximize_window()
-    def test(self):
-        driver.find_element_by_name(self,"q").send_keys('mahesh babu')
-        time.sleep(5)
-        driver.find_element_by_name('btnk').click()
-        time.sleep(5)
-        driver.find_element_by_name('LC201b').click
-    def tearDown(self):
-        print('treaDown completed')
-unittest.main()
-driver.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
